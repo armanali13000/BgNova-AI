@@ -93,18 +93,18 @@ function QualityComparison({ sample }) {
 function Home() {
   const qualitySamples = [
     {
-      key: 'products',
-      label: 'Products',
-      title: 'Catalog items stay sharp and sell-ready',
-      image: productSampleImage,
-      beforeBg: 'linear-gradient(135deg, #c4a7b7, #ead8f2)',
-    },
-    {
       key: 'people',
       label: 'People',
       title: 'Portrait edges stay clean around hair and clothing',
       image: peopleSampleImage,
       beforeBg: 'linear-gradient(135deg, #bae6fd, #ddd6fe)',
+    },
+    {
+      key: 'products',
+      label: 'Products',
+      title: 'Catalog items stay sharp and sell-ready',
+      image: productSampleImage,
+      beforeBg: 'linear-gradient(135deg, #d9f99d, #bbf7d0)',
     },
     {
       key: 'pets',
