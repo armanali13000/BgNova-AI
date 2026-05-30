@@ -1,0 +1,26 @@
+{
+  "name": "bgnova-ai",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "npm run build && vite preview --host 0.0.0.0 --port 3007 --strictPort",
+    "dev:vite": "vite --host 0.0.0.0 --port 3010 --strictPort",
+    "build": "vite build",
+    "preview": "vite preview --host 0.0.0.0 --port 3008 --strictPort"
+  },
+  "dependencies": {
+    "@vitejs/plugin-react": "^4.3.4",
+    "cropperjs": "^1.6.2",
+    "fabric": "^6.6.1",
+    "framer-motion": "^11.15.0",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "react-easy-crop": "^5.2.0",
+    "react-hot-toast": "^2.5.1",
+    "react-icons": "^5.4.0",
+    "react-router-dom": "^6.28.1",
+    "vite": "^6.0.7"
+  },
+  "devDependencies": {}
+}

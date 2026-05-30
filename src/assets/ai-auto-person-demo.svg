@@ -1,0 +1,31 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 560" role="img" aria-labelledby="title desc">
+  <title id="title">Person with removed background</title>
+  <desc id="desc">A friendly portrait-style person shown on a transparent checkerboard preview.</desc>
+  <defs>
+    <linearGradient id="shirt" x1="230" y1="260" x2="512" y2="536" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#14b8a6"/>
+      <stop offset=".48" stop-color="#2563eb"/>
+      <stop offset="1" stop-color="#7c3aed"/>
+    </linearGradient>
+    <linearGradient id="hair" x1="235" y1="92" x2="450" y2="244" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#172554"/>
+      <stop offset="1" stop-color="#020617"/>
+    </linearGradient>
+    <filter id="shadow" x="80" y="34" width="560" height="500" filterUnits="userSpaceOnUse">
+      <feDropShadow dx="0" dy="28" stdDeviation="24" flood-color="#020617" flood-opacity=".38"/>
+    </filter>
+  </defs>
+  <g filter="url(#shadow)">
+    <path d="M223 502c12-95 67-154 138-154s126 59 138 154H223z" fill="url(#shirt)"/>
+    <path d="M256 384c25 33 58 50 102 50 47 0 83-18 108-54 23 28 36 67 41 122H213c5-53 19-92 43-118z" fill="#f8fafc" opacity=".18"/>
+    <path d="M303 309h112v83c0 29-25 52-56 52s-56-23-56-52v-83z" fill="#f2c7a5"/>
+    <path d="M228 190c0-69 55-125 126-125 79 0 133 53 133 129 0 47-13 100-43 133-24 27-55 42-91 42-37 0-68-15-91-43-25-31-34-84-34-136z" fill="#f7d0af"/>
+    <path d="M231 199c-12-80 35-143 115-151 87-8 145 42 156 123-47-5-89-22-128-50-37 43-84 67-143 78z" fill="url(#hair)"/>
+    <path d="M267 220c9-19 24-29 45-29m91 0c21 1 36 10 45 29" fill="none" stroke="#0f172a" stroke-width="15" stroke-linecap="round" opacity=".42"/>
+    <path d="M320 287c22 16 49 16 77 0" fill="none" stroke="#8f4d38" stroke-width="13" stroke-linecap="round"/>
+    <circle cx="306" cy="242" r="10" fill="#0f172a"/>
+    <circle cx="417" cy="242" r="10" fill="#0f172a"/>
+    <path d="M183 332c-45-28-70-68-75-121 61 4 103 30 126 78 14 29-22 60-51 43z" fill="#22c55e"/>
+    <path d="M532 316c28-44 69-69 123-75-4 56-30 98-77 126-28 17-63-23-46-51z" fill="#38bdf8"/>
+  </g>
+</svg>

@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="BgNova AI is a premium AI background remover and browser-based image editor."
+    />
+    <link rel="icon" type="image/png" href="/src/assets/bgnova-ai-logo.png" />
+    <title>BgNova AI | Remove Backgrounds in Seconds</title>
+  </head>
+  <body>
+    <div id="root">
+      <div
+        id="boot-fallback"
+        style="
+          min-height: 100vh;
+          display: grid;
+          place-items: center;
+          padding: 24px;
+          background: #0f172a;
+          color: #f8fafc;
+          font-family: Inter, system-ui, sans-serif;
+        "
+      >
+        <div style="max-width: 560px; text-align: center">
+          <img
+            src="/src/assets/bgnova-ai-logo.png"
+            alt="BgNova AI logo"
+            style="width: 76px; height: 76px; object-fit: contain; margin-bottom: 14px"
+          />
+          <h1 style="margin: 0 0 12px; font-size: 42px">BgNova AI</h1>
+          <p id="boot-message" style="margin: 0; color: #cbd5e1">Loading editor...</p>
+          <p style="margin: 18px 0 0; color: #94a3b8; font-size: 14px">
+            If this stays here, stop old Node servers, run <strong>npm run dev</strong>, and open <strong>http://localhost:3007/</strong>.
+          </p>
+        </div>
+      </div>
+    </div>
+    <script>
+      window.addEventListener('error', function (event) {
+        var message = document.getElementById('boot-message');
+        if (message) {
+          message.textContent = 'JavaScript failed to load: ' + (event.message || 'blocked by browser');
+        }
+      });
+
+      window.addEventListener('unhandledrejection', function (event) {
+        var message = document.getElementById('boot-message');
+        if (message) {
+          message.textContent =
+            'JavaScript failed to start: ' + ((event.reason && event.reason.message) || event.reason || 'unknown error');
+        }
+      });
+
+      if (window.location.protocol === 'file:') {
+        var fileMessage = document.getElementById('boot-message');
+        if (fileMessage) {
+          fileMessage.textContent = 'This was opened as a file. Start Vite with npm run dev and open http://localhost:3007/.';
+        }
+      }
+    </script>
+    <script
+      type="module"
+      src="/app.js"
+      onerror="document.getElementById('boot-message').textContent = 'The React app script could not load. Make sure npm run dev is still running, then open http://localhost:3007/ with Brave Shields off.'"
+    ></script>
+  </body>
+</html>

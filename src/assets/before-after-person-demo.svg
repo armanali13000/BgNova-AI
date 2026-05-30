@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 560" role="img" aria-labelledby="title desc">
+  <title id="title">Different person background removal demo</title>
+  <desc id="desc">A second portrait-style person used for before and after comparison.</desc>
+  <defs>
+    <linearGradient id="jacket" x1="205" y1="308" x2="530" y2="536" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#f97316"/>
+      <stop offset=".45" stop-color="#ef4444"/>
+      <stop offset="1" stop-color="#8b5cf6"/>
+    </linearGradient>
+    <linearGradient id="hair2" x1="216" y1="68" x2="462" y2="292" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#78350f"/>
+      <stop offset="1" stop-color="#1c1917"/>
+    </linearGradient>
+    <filter id="shadow2" x="80" y="34" width="560" height="500" filterUnits="userSpaceOnUse">
+      <feDropShadow dx="0" dy="28" stdDeviation="24" flood-color="#020617" flood-opacity=".34"/>
+    </filter>
+  </defs>
+  <g filter="url(#shadow2)">
+    <path d="M200 509c16-89 75-145 158-145 82 0 141 56 158 145H200z" fill="url(#jacket)"/>
+    <path d="M303 326h112v70c0 30-25 54-56 54s-56-24-56-54v-70z" fill="#d7a17f"/>
+    <path d="M230 190c0-76 56-134 129-134s130 58 130 134c0 98-52 179-130 179s-129-81-129-179z" fill="#e8b38d"/>
+    <path d="M222 198c-8-94 50-152 134-152 83 0 141 58 142 153-42-6-80-23-113-50-44 37-99 54-163 49z" fill="url(#hair2)"/>
+    <path d="M277 230c18-11 39-11 60 0m48 0c20-11 40-11 60 0" fill="none" stroke="#292524" stroke-width="14" stroke-linecap="round" opacity=".46"/>
+    <circle cx="313" cy="257" r="9" fill="#111827"/>
+    <circle cx="407" cy="257" r="9" fill="#111827"/>
+    <path d="M325 308c20 13 45 13 68 0" fill="none" stroke="#7f1d1d" stroke-width="12" stroke-linecap="round"/>
+    <path d="M250 402c31 38 67 57 109 57 43 0 80-19 111-57 19 25 32 60 39 107H209c7-47 20-82 41-107z" fill="#fff7ed" opacity=".2"/>
+  </g>
+</svg>
