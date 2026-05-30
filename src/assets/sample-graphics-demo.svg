@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 560" role="img" aria-labelledby="title desc">
+  <title id="title">Graphic background removal sample</title>
+  <desc id="desc">Layered graphic shapes used as a background removal sample.</desc>
+  <defs>
+    <linearGradient id="shapeA" x1="154" y1="110" x2="545" y2="440" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#06b6d4"/>
+      <stop offset=".5" stop-color="#2563eb"/>
+      <stop offset="1" stop-color="#a855f7"/>
+    </linearGradient>
+    <filter id="shadow" x="110" y="70" width="500" height="430" filterUnits="userSpaceOnUse">
+      <feDropShadow dx="0" dy="28" stdDeviation="24" flood-color="#020617" flood-opacity=".3"/>
+    </filter>
+  </defs>
+  <g filter="url(#shadow)">
+    <rect x="173" y="134" width="356" height="292" rx="62" fill="url(#shapeA)" transform="rotate(-8 351 280)"/>
+    <circle cx="263" cy="232" r="76" fill="#f8fafc" opacity=".9"/>
+    <path d="M337 348l63-123 90 165H266l49-77 39 35z" fill="#facc15"/>
+    <path d="M448 152l26 52 57 8-42 40 10 56-51-27-50 27 9-56-41-40 57-8 25-52z" fill="#f8fafc"/>
+    <path d="M203 444h296" stroke="#0f172a" stroke-width="18" stroke-linecap="round" opacity=".22"/>
+  </g>
+</svg>

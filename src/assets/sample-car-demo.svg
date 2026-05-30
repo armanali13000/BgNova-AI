@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 560" role="img" aria-labelledby="title desc">
+  <title id="title">Car background removal sample</title>
+  <desc id="desc">A compact electric car used as a background removal sample.</desc>
+  <defs>
+    <linearGradient id="paint" x1="150" y1="160" x2="560" y2="420" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#22d3ee"/>
+      <stop offset=".45" stop-color="#2563eb"/>
+      <stop offset="1" stop-color="#7c3aed"/>
+    </linearGradient>
+    <filter id="shadow" x="92" y="144" width="540" height="330" filterUnits="userSpaceOnUse">
+      <feDropShadow dx="0" dy="28" stdDeviation="22" flood-color="#020617" flood-opacity=".32"/>
+    </filter>
+  </defs>
+  <g filter="url(#shadow)">
+    <path d="M171 318c12-72 69-123 140-132l106-13c61-8 116 23 142 78l28 59c34 6 57 33 57 67 0 38-31 69-69 69H168c-38 0-69-31-69-69 0-32 22-59 52-67l20 8z" fill="url(#paint)"/>
+    <path d="M271 210h144c45 0 83 27 100 66H202c16-37 40-60 69-66z" fill="#e0f2fe" opacity=".86"/>
+    <path d="M325 210v66" stroke="#1e3a8a" stroke-width="12" opacity=".36"/>
+    <circle cx="214" cy="432" r="58" fill="#0f172a"/>
+    <circle cx="214" cy="432" r="27" fill="#94a3b8"/>
+    <circle cx="519" cy="432" r="58" fill="#0f172a"/>
+    <circle cx="519" cy="432" r="27" fill="#94a3b8"/>
+    <path d="M144 344h479" stroke="#f8fafc" stroke-width="10" stroke-linecap="round" opacity=".18"/>
+  </g>
+</svg>
