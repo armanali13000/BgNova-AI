@@ -1,5 +1,4 @@
-import { useCallback, useEffect, useState } from 'react';
-import { useRef } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import Cropper from 'react-easy-crop';
 import toast from 'react-hot-toast';
 import { FiCheck, FiCrop, FiImage, FiMaximize2, FiRotateCcw, FiX } from 'react-icons/fi';
@@ -43,8 +42,8 @@ function CropModal({ imageSrc, onCancel, onCropComplete, onUseOriginal }) {
     const updateSize = () => {
       const rect = stage.getBoundingClientRect();
       setCropSize((current) => ({
-        width: Math.min(Math.max(current.width, 120), Math.max(120, rect.width - 40)),
-        height: Math.min(Math.max(current.height, 120), Math.max(120, rect.height - 40)),
+        width: Math.min(Math.max(current.width, 120), Math.max(120, rect.width - 80)),
+        height: Math.min(Math.max(current.height, 120), Math.max(120, rect.height - 80)),
       }));
     };
     updateSize();
@@ -58,8 +57,8 @@ function CropModal({ imageSrc, onCancel, onCropComplete, onUseOriginal }) {
 
   const clampCropSize = useCallback((nextSize) => {
     const rect = cropStageRef.current?.getBoundingClientRect();
-    const maxWidth = rect ? rect.width - 36 : 760;
-    const maxHeight = rect ? rect.height - 36 : 560;
+    const maxWidth = rect ? rect.width - 80 : 720;
+    const maxHeight = rect ? rect.height - 80 : 500;
     return {
       width: Math.round(Math.min(Math.max(nextSize.width, 96), Math.max(96, maxWidth))),
       height: Math.round(Math.min(Math.max(nextSize.height, 96), Math.max(96, maxHeight))),
@@ -183,19 +182,28 @@ function CropModal({ imageSrc, onCancel, onCropComplete, onUseOriginal }) {
           )}
         </div>
         <div className="crop-controls">
-          <label>
-            Zoom
-            <input type="range" min="1" max="3" step="0.01" value={zoom} onChange={(event) => setZoom(Number(event.target.value))} />
-          </label>
-          <button
-            className={`tool-btn ${customSizing ? 'active' : ''}`}
-            onClick={() => {
-              setCustomSizing((value) => !value);
-              setAspect(null);
-            }}
-          >
-            <FiMaximize2 /> Resize Box
-          </button>
+          <div className="crop-main-controls">
+            <label className="crop-zoom-control">
+              Zoom
+              <input type="range" min="1" max="3" step="0.01" value={zoom} onChange={(event) => setZoom(Number(event.target.value))} />
+            </label>
+            <button
+              className={`tool-btn ${customSizing ? 'active' : ''}`}
+              onClick={() => {
+                setAspect(null);
+                setCustomSizing((value) => {
+                  const next = !value;
+                  if (next) setCropSize((current) => clampCropSize(current));
+                  return next;
+                });
+              }}
+            >
+              <FiMaximize2 /> Resize Box
+            </button>
+            <button className="tool-btn" onClick={() => setRotation((value) => value + 90)}>
+              <FiRotateCcw /> Rotate
+            </button>
+          </div>
           {customSizing && (
             <div className="crop-size-fields">
               <label>
@@ -218,12 +226,11 @@ function CropModal({ imageSrc, onCancel, onCropComplete, onUseOriginal }) {
               </label>
             </div>
           )}
-          <button className="tool-btn" onClick={() => setRotation((value) => value + 90)}>
-            <FiRotateCcw /> Rotate
-          </button>
-          <button className="btn" disabled={busy} onClick={applyCrop}>
-            {aspect === null ? <FiCrop /> : <FiCheck />} {busy ? 'Cropping...' : 'Apply Crop'}
-          </button>
+          <div className="crop-action-row">
+            <button className="btn crop-apply-btn" disabled={busy} onClick={applyCrop}>
+              {aspect === null ? <FiCrop /> : <FiCheck />} {busy ? 'Cropping...' : 'Apply Crop'}
+            </button>
+          </div>
         </div>
       </div>
     </div>
