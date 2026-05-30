@@ -2,7 +2,8 @@ import { useEffect, useState } from 'react';
 import { FiCpu, FiDownload, FiLayers, FiMousePointer, FiShield, FiZap } from 'react-icons/fi';
 import Hero from '../components/Hero.jsx';
 import FeatureCard from '../components/FeatureCard.jsx';
-import beforeAfterPersonImage from '../assets/before-after-person-demo.svg';
+import ChromaCutoutImage from '../components/ChromaCutoutImage.jsx';
+import beforeAfterPersonImage from '../assets/before-after-real-person-source.png';
 import productSampleImage from '../assets/quality-product-source.png';
 import peopleSampleImage from '../assets/quality-people-source.png';
 import petSampleImage from '../assets/quality-pets-source.png';
@@ -197,11 +198,11 @@ function Home() {
         </div>
         <div className="before-after glass">
           <div className="before-panel">
-            <img src={beforeAfterPersonImage} alt="Original portrait before background removal" />
+            <ChromaCutoutImage src={beforeAfterPersonImage} alt="Original portrait before background removal" />
             <span>Before</span>
           </div>
           <div className="after-panel checker">
-            <img src={beforeAfterPersonImage} alt="Portrait after AI background removal" />
+            <ChromaCutoutImage src={beforeAfterPersonImage} alt="Portrait after AI background removal" />
             <span>After</span>
           </div>
           <span className="compare-line" />

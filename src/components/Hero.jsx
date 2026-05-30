@@ -1,7 +1,8 @@
 import { useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import UploadBox from './UploadBox.jsx';
-import personDemoImage from '../assets/ai-auto-person-demo.svg';
+import ChromaCutoutImage from './ChromaCutoutImage.jsx';
+import personDemoImage from '../assets/hero-person-source.png';
 
 function Hero() {
   const navigate = useNavigate();
@@ -24,7 +25,7 @@ function Hero() {
       </div>
       <motion.div className="hero-preview" initial={{ opacity: 0, scale: 0.95 }} animate={{ opacity: 1, scale: 1 }}>
         <div className="preview-stage checker">
-          <img className="hero-demo-image" src={personDemoImage} alt="AI removed background preview with a person" />
+          <ChromaCutoutImage className="hero-demo-image" src={personDemoImage} alt="AI removed background preview with a person" />
           <div className="preview-badge">AI Auto Ready</div>
         </div>
       </motion.div>
