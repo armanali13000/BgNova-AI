@@ -146,9 +146,37 @@ function Home() {
     ['What formats can I export?', 'PNG, JPG, and WEBP are supported from the editor download panel.'],
   ];
 
+  const seoUseCases = [
+    [
+      'Free AI background remover',
+      'Upload a photo and create a clean transparent PNG for profile pictures, product images, social posts, and design work.',
+    ],
+    [
+      'Product photo background remover',
+      'Prepare ecommerce images with clean cutouts, consistent previews, and export options for marketplaces and online stores.',
+    ],
+    [
+      'Transparent PNG maker',
+      'Remove image backgrounds and download transparent PNG files that are ready for Canva, Photoshop, Figma, websites, and presentations.',
+    ],
+    [
+      'Online background eraser',
+      'Use brush controls, color removal, magic erase, and repair tools to refine edges directly in your browser.',
+    ],
+  ];
+
   return (
     <>
       <Hero />
+      <section className="section seo-intro glass">
+        <div>
+          <p className="eyebrow">Free online background remover</p>
+          <h2>Remove background from images and export transparent PNG files</h2>
+        </div>
+        <p>
+          BgNova AI helps creators, sellers, students, marketers, and designers remove image backgrounds online. Upload a JPG, PNG, or WEBP image, clean the cutout with browser editing tools, preview the result on different backgrounds, and download a transparent PNG, JPG, or WEBP file.
+        </p>
+      </section>
       <section className="section">
         <div className="section-head">
           <p className="eyebrow">Editor-grade controls</p>
@@ -157,6 +185,20 @@ function Home() {
         <div className="feature-grid">
           {features.map(([icon, title, text]) => (
             <FeatureCard key={title} icon={icon} title={title} text={text} />
+          ))}
+        </div>
+      </section>
+      <section className="section seo-use-cases">
+        <div className="section-head">
+          <p className="eyebrow">Popular uses</p>
+          <h2>Background removal for products, portraits, graphics, and more</h2>
+        </div>
+        <div className="seo-grid">
+          {seoUseCases.map(([title, text]) => (
+            <article key={title} className="seo-card glass">
+              <h3>{title}</h3>
+              <p>{text}</p>
+            </article>
           ))}
         </div>
       </section>
@@ -206,6 +248,18 @@ function Home() {
             <span>After</span>
           </div>
           <span className="compare-line" />
+        </div>
+      </section>
+      <section className="section seo-copy glass">
+        <p className="eyebrow">Why use BgNova AI?</p>
+        <h2>A simple image background remover built for fast everyday editing</h2>
+        <div className="seo-copy-columns">
+          <p>
+            Whether you need a profile picture background remover, a product photo cutout, a transparent PNG for a design project, or a quick background eraser for social media, BgNova AI gives you a focused editor without complicated software.
+          </p>
+          <p>
+            The editor includes crop-first workflow, manual erase, repair, background previews, and export formats that fit real projects. It is designed to be easy for beginners while still giving enough control for clean edge refinement.
+          </p>
         </div>
       </section>
       <section className="section">
