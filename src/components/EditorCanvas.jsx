@@ -8,11 +8,31 @@ import BackgroundPreview from './BackgroundPreview.jsx';
 import BeforeAfterPreview from './BeforeAfterPreview.jsx';
 import { createImageDataFromUrl, cloneImageData } from '../utils/imageUtils.js';
 import { createHistory, pushHistory, redoHistory, undoHistory } from '../utils/canvasHistory.js';
-import { autoRemoveBackground, brushEdit, hexToRgb, magicErase, removeSimilarColor } from '../utils/colorRemove.js';
+import { brushEdit, hexToRgb, magicErase, removeSimilarColor } from '../utils/colorRemove.js';
 import { downloadDataUrl, exportCanvas } from '../utils/exportUtils.js';
 
 function rgbToHex(r, g, b) {
   return `#${[r, g, b].map((value) => value.toString(16).padStart(2, '0')).join('')}`;
+}
+
+function imageDataToPngDataUrl(imageData) {
+  const source = document.createElement('canvas');
+  source.width = imageData.width;
+  source.height = imageData.height;
+  source.getContext('2d').putImageData(imageData, 0, 0);
+
+  const maxSide = 1600;
+  const scale = Math.min(1, maxSide / Math.max(imageData.width, imageData.height));
+  if (scale === 1) return source.toDataURL('image/png');
+
+  const canvas = document.createElement('canvas');
+  canvas.width = Math.round(imageData.width * scale);
+  canvas.height = Math.round(imageData.height * scale);
+  const ctx = canvas.getContext('2d');
+  ctx.imageSmoothingEnabled = true;
+  ctx.imageSmoothingQuality = 'high';
+  ctx.drawImage(source, 0, 0, canvas.width, canvas.height);
+  return canvas.toDataURL('image/png');
 }
 
 function EditorCanvas({ imageSrc, onRecrop }) {
@@ -184,19 +204,35 @@ function EditorCanvas({ imageSrc, onRecrop }) {
     commit(removeSimilarColor(workingRef.current, hexToRgb(bgColor), tolerance), 'Similar color removed');
   };
 
-  const handleAiAuto = () => {
+  const handleAiAuto = async () => {
     if (!workingRef.current) return;
     const loadingToast = toast.loading('AI Auto is removing the background...');
-    window.setTimeout(() => {
-      const { imageData, removedPixels } = autoRemoveBackground(workingRef.current, tolerance);
+    try {
+      const response = await fetch('/api/remove-background', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          imageBase64: imageDataToPngDataUrl(workingRef.current),
+        }),
+      });
+
+      const payload = await response.json();
       toast.dismiss(loadingToast);
-      if (!removedPixels) {
-        toast.error('AI Auto could not detect a clear background. Try Auto Color or Magic Eraser.');
+
+      if (!response.ok) {
+        toast.error(payload?.error || 'AI Auto failed. Please try Magic Eraser or Auto Color.');
         return;
       }
+
+      const { imageData } = await createImageDataFromUrl(payload.imageBase64);
       commit(imageData, 'AI Auto background removed');
       setActiveTool('repair');
-    }, 40);
+    } catch {
+      toast.dismiss(loadingToast);
+      toast.error('AI Auto could not connect. Check your internet or API setup.');
+    }
   };
 
   const reset = () => {
