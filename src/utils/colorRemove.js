@@ -28,6 +28,103 @@ export function removeSimilarColor(imageData, color, tolerance) {
   return next;
 }
 
+export function autoRemoveBackground(imageData, tolerance = 64) {
+  const next = cloneImageData(imageData);
+  const { width, height, data } = next;
+  const visited = new Uint8Array(width * height);
+  const queue = [];
+  const backgroundSamples = [];
+  const sampleStep = Math.max(8, Math.floor(Math.min(width, height) / 28));
+  const limit = Math.max(38, tolerance * 1.45);
+
+  const addSample = (x, y) => {
+    const index = (y * width + x) * 4;
+    if (data[index + 3] === 0) return;
+    backgroundSamples.push({
+      r: data[index],
+      g: data[index + 1],
+      b: data[index + 2],
+    });
+  };
+
+  for (let x = 0; x < width; x += sampleStep) {
+    addSample(x, 0);
+    addSample(x, height - 1);
+  }
+  for (let y = 0; y < height; y += sampleStep) {
+    addSample(0, y);
+    addSample(width - 1, y);
+  }
+
+  if (!backgroundSamples.length) {
+    return { imageData: next, removedPixels: 0 };
+  }
+
+  const isBackgroundLike = (index) => {
+    if (data[index + 3] === 0) return true;
+    for (const color of backgroundSamples) {
+      if (distance(data, index, color) <= limit) return true;
+    }
+    return false;
+  };
+
+  const enqueue = (x, y) => {
+    if (x < 0 || y < 0 || x >= width || y >= height) return;
+    const point = y * width + x;
+    if (visited[point]) return;
+    queue.push([x, y]);
+  };
+
+  for (let x = 0; x < width; x += 1) {
+    enqueue(x, 0);
+    enqueue(x, height - 1);
+  }
+  for (let y = 0; y < height; y += 1) {
+    enqueue(0, y);
+    enqueue(width - 1, y);
+  }
+
+  let removedPixels = 0;
+
+  while (queue.length) {
+    const [x, y] = queue.pop();
+    const point = y * width + x;
+    if (visited[point]) continue;
+    visited[point] = 1;
+    const index = point * 4;
+    if (!isBackgroundLike(index)) continue;
+
+    if (data[index + 3] !== 0) {
+      data[index + 3] = 0;
+      removedPixels += 1;
+    }
+
+    enqueue(x + 1, y);
+    enqueue(x - 1, y);
+    enqueue(x, y + 1);
+    enqueue(x, y - 1);
+  }
+
+  const alpha = data.slice();
+  for (let y = 1; y < height - 1; y += 1) {
+    for (let x = 1; x < width - 1; x += 1) {
+      const point = y * width + x;
+      const index = point * 4;
+      if (alpha[index + 3] === 0) continue;
+      const touchesTransparent =
+        alpha[((y - 1) * width + x) * 4 + 3] === 0 ||
+        alpha[((y + 1) * width + x) * 4 + 3] === 0 ||
+        alpha[(y * width + x - 1) * 4 + 3] === 0 ||
+        alpha[(y * width + x + 1) * 4 + 3] === 0;
+      if (touchesTransparent && isBackgroundLike(index)) {
+        data[index + 3] = Math.min(data[index + 3], 110);
+      }
+    }
+  }
+
+  return { imageData: next, removedPixels };
+}
+
 export function magicErase(imageData, startX, startY, tolerance) {
   const width = imageData.width;
   const height = imageData.height;

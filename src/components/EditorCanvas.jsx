@@ -8,7 +8,7 @@ import BackgroundPreview from './BackgroundPreview.jsx';
 import BeforeAfterPreview from './BeforeAfterPreview.jsx';
 import { createImageDataFromUrl, cloneImageData } from '../utils/imageUtils.js';
 import { createHistory, pushHistory, redoHistory, undoHistory } from '../utils/canvasHistory.js';
-import { brushEdit, hexToRgb, magicErase, removeSimilarColor } from '../utils/colorRemove.js';
+import { autoRemoveBackground, brushEdit, hexToRgb, magicErase, removeSimilarColor } from '../utils/colorRemove.js';
 import { downloadDataUrl, exportCanvas } from '../utils/exportUtils.js';
 
 function rgbToHex(r, g, b) {
@@ -185,11 +185,18 @@ function EditorCanvas({ imageSrc, onRecrop }) {
   };
 
   const handleAiAuto = () => {
-    toast.loading('AI Auto Remove endpoint is ready to connect.', { duration: 1500 });
-    async function removeBackgroundWithAi() {
-      throw new Error('Connect remove.bg, Clipdrop, or a custom AI model here.');
-    }
-    removeBackgroundWithAi().catch(() => {});
+    if (!workingRef.current) return;
+    const loadingToast = toast.loading('AI Auto is removing the background...');
+    window.setTimeout(() => {
+      const { imageData, removedPixels } = autoRemoveBackground(workingRef.current, tolerance);
+      toast.dismiss(loadingToast);
+      if (!removedPixels) {
+        toast.error('AI Auto could not detect a clear background. Try Auto Color or Magic Eraser.');
+        return;
+      }
+      commit(imageData, 'AI Auto background removed');
+      setActiveTool('repair');
+    }, 40);
   };
 
   const reset = () => {
